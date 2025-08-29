@@ -1,3 +1,129 @@
+## ⚙️ **All Admin Setting Options & Functions**
+
+### **🔧 Plugin Status**
+- **Enable Qlassy Ads Manager Plugin** - Master switch to turn the entire plugin on/off
+
+### **📋 AdSense Header Code (Required for AdSense)**
+- **Enable AdSense Header Code** - Turn on/off AdSense header script insertion
+- **AdSense Header Code** - Text area to paste your AdSense header script
+
+### **🔄 Ad Rotation Feature**
+- **Enable Ad Rotation** - Turn on/off the ad rotation system using `[QLASSY ROTATE]` separator
+
+### **🎯 Targeting & Rules**
+- **Show ads only to guests** - Hide all ads from logged-in users, show only to visitors
+- **Enable device targeting** - Turn on/off different ads for desktop vs mobile using `[DESKTOP]` and `[MOBILE]` tags
+- **Hide ads from specific user roles** - Turn on/off role-based ad hiding
+- **Roles to hide ads from** - Text field to specify which user roles (admin, moderator, editor, expert, user) should not see ads
+
+### **📌 Header Ad (Top of every page)**
+- **Enable Header Ad** - Turn on/off header ad display
+- **Header Ad Code** - Text area to paste your header ad HTML/script code
+
+### **📌 Footer Ad (Bottom of every page)**
+- **Enable Footer Ad** - Turn on/off footer ad display
+- **Footer Ad Code** - Text area to paste your footer ad HTML/script code
+
+### **�� Sidebar Ads**
+- **Enable Top Sidebar Ad** - Turn on/off top sidebar ad display
+- **Top Sidebar Ad Code** - Text area to paste your top sidebar ad code
+- **Enable Bottom Sidebar Ad** - Turn on/off bottom sidebar ad display
+- **Bottom Sidebar Ad Code** - Text area to paste your bottom sidebar ad code
+
+### **📌 Sticky Ads (Fixed Position)**
+- **Enable Top Sticky Ad** - Turn on/off fixed position ad at top of screen
+- **Top Sticky Ad Code** - Text area to paste your top sticky ad code
+- **Enable Bottom Sticky Ad** - Turn on/off fixed position ad at bottom of screen
+- **Bottom Sticky Ad Code** - Text area to paste your bottom sticky ad code
+
+### **📌 Question Page Ads**
+- **Enable Question Top Ad** - Turn on/off ad at top of question pages
+- **Question Top Ad Code** - Text area to paste your question top ad code
+- **Enable Question Bottom Ad** - Turn on/off ad at bottom of question pages
+- **Question Bottom Ad Code** - Text area to paste your question bottom ad code
+
+### **📌 Answer Ads**
+- **Enable Answer Top Ad** - Turn on/off ad at top of answer sections
+- **Answer Top Ad Code** - Text area to paste your answer top ad code
+- **Enable Answer Bottom Ad** - Turn on/off ad at bottom of answer sections
+- **Answer Bottom Ad Code** - Text area to paste your answer bottom ad code
+
+### **�� Between Answers Ad**
+- **Enable Between Answers Ad** - Turn on/off ads inserted between answer posts
+- **Between Answers Ad Code** - Text area to paste your between answers ad code
+- **Show ad after answers** - Text field to specify frequency (e.g., "2" or "2,3,5,7")
+
+### **📌 Homepage Ads**
+- **Enable Homepage Top Ad** - Turn on/off ad at top of homepage
+- **Homepage Top Ad Code** - Text area to paste your homepage top ad code
+- **Enable Homepage Bottom Ad** - Turn on/off ad at bottom of homepage (SnowFlat theme only)
+- **Homepage Bottom Ad Code** - Text area to paste your homepage bottom ad code
+
+### **📌 Category Page Ads**
+- **Enable Category Top Ad** - Turn on/off ad at top of category pages
+- **Category Top Ad Code** - Text area to paste your category top ad code
+- **Enable Category Bottom Ad** - Turn on/off ad at bottom of category pages
+- **Category Bottom Ad Code** - Text area to paste your category bottom ad code
+
+### **📌 Tag Page Ads**
+- **Enable Tag Top Ad** - Turn on/off ad at top of tag pages
+- **Tag Top Ad Code** - Text area to paste your tag top ad code
+- **Enable Tag Bottom Ad** - Turn on/off ad at bottom of tag pages
+- **Tag Bottom Ad Code** - Text area to paste your tag bottom ad code
+
+### **📌 User Profile Page Ads**
+- **Enable User Profile Ad** - Turn on/off ad on user profile pages
+- **User Profile Ad Code** - Text area to paste your user profile ad code
+
+### **📌 Between Questions Ads (All Question Lists)**
+- **Enable Between Questions Ad** - Turn on/off ads inserted between question posts
+- **Between Questions Ad Code** - Text area to paste your between questions ad code
+- **Show ad after questions** - Text field to specify frequency (e.g., "2" or "2,3,5,7")
+
+### **📌 Sticky Side Rail Ads (Fixed Position)**
+- **Enable Left Side Rail Ad** - Turn on/off fixed position ad on left side of screen
+- **Left Side Rail Ad Code** - Text area to paste your left side rail ad code
+- **Enable Right Side Rail Ad** - Turn on/off fixed position ad on right side of screen
+- **Right Side Rail Ad Code** - Text area to paste your right side rail ad code
+
+### **📌 Advertisement Label Settings**
+- **Show "Advertisement" Label** - Turn on/off "Advertisement" labels on all ad containers
+
+### **📌 Page Exclude/Include Settings**
+- **Page Control Mode** - Dropdown to choose "Exclude ads from specific pages" or "Show ads only on specific pages"
+- **Page List** - Text area to specify which pages to include/exclude (e.g., admin, login, register, account)
+
+### **📌 Search Results Page Ads**
+- **Enable Search Results Ad** - Turn on/off ad on search results pages
+- **Search Results Ad Code** - Text area to paste your search results ad code
+
+### **📌 Adblock Detection**
+- **Enable Adblock Detection** - Turn on/off ad blocker detection and popup system
+
+## 📊 **Summary of Setting Categories**
+
+| **Category** | **Number of Settings** | **Function** |
+|--------------|------------------------|--------------|
+| **Plugin Control** | 1 | Master enable/disable |
+| **AdSense Setup** | 2 | Header script configuration |
+| **Ad Rotation** | 1 | Multiple ad rotation system |
+| **Targeting Rules** | 4 | User and device targeting |
+| **Static Ad Locations** | 16 | Header, footer, sidebar ads |
+| **Sticky Ads** | 4 | Fixed position ads |
+| **Page-Specific Ads** | 12 | Question, answer, category, tag ads |
+| **Dynamic Ads** | 4 | Between questions/answers with frequency |
+| **Side Rail Ads** | 4 | Left/right fixed position ads |
+| **Labels & Display** | 1 | Advertisement labels |
+| **Page Control** | 2 | Include/exclude specific pages |
+| **Search Ads** | 2 | Search results page ads |
+| **Adblock Detection** | 1 | Ad blocker detection system |
+
+**Total Settings**: **54 individual configuration options** across 13 categories, providing complete control over ad placement, targeting, and display behavior.
+
+
+
+
+
 # Qlassy Ads Manager Plugin for Question2Answer
 
 **Developer:** [Sourav Pan](https://github.com/Souravpandev)  
