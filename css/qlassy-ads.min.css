@@ -1,0 +1,516 @@
+/*
+	Plugin Name: Qlassy Ads Manager
+	Plugin URI: https://github.com/Souravpandev/Qlassy-Ads-Manager
+	Plugin Description: A comprehensive advertising plugin for Question2Answer that allows you to insert AdSense banner ads or custom HTML code in various locations throughout your Q2A website. Features include 16+ ad insertion locations, dynamic ad insertion between questions/answers, sticky ads, ad rotation, device targeting, guest-only targeting, role-based targeting, page exclude/include, AdSense header integration, advertisement labels, and adblock detection.
+	Plugin Version: 1.3
+	Plugin Date: 2025-01-28
+	Plugin Author: Sourav Pan
+	Plugin Author URI: https://github.com/Souravpandev
+	Plugin License: GPLv3
+	Plugin Minimum Question2Answer Version: 1.8
+	Plugin Update Check URI: https://raw.githubusercontent.com/Souravpandev/Qlassy-Ads-Manager/main/qa-plugin.php
+
+	This program is free software: you can redistribute it and/or
+	modify it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License along
+	with this program. If not, see <http://www.gnu.org/licenses/>.
+
+	Developer: Sourav Pan
+	Website: https://wpoptimizelab.com/
+	GitHub: https://github.com/Souravpandev
+	Repository: https://github.com/Souravpandev/Qlassy-Ads-Manager
+
+	FEATURES:
+	- 16+ ad insertion locations (header, footer, sidebar, homepage, questions, answers, categories, tags, profiles, search)
+	- Dynamic ad insertion between questions and answers with custom frequency
+	- Sticky ads (side rails, top, bottom) with close buttons
+	- Ad rotation using [QLASSY ROTATE] separator
+	- Device targeting with [DESKTOP] and [MOBILE] tags
+	- Guest-only and role-based targeting
+	- Page exclude/include functionality
+	- AdSense header integration
+	- Advertisement labels (globally controllable)
+	- Adblock detection with non-closable popup
+	- Responsive design with professional styling
+	- Professional styling and user experience
+*/
+
+/* Basic ad container styling - simplified to avoid conflicts */
+.qlassy-ads-header,
+.qlassy-ads-footer,
+.qlassy-ads-sidebar-top,
+.qlassy-ads-sidebar-bottom,
+.qlassy-ads-main-top,
+.qlassy-ads-question-top,
+.qlassy-ads-question-bottom,
+.qlassy-ads-answer-top,
+.qlassy-ads-answer-bottom,
+.qlassy-ads-between-answers,
+.qlassy-ads-between-questions,
+.qlassy-ads-homepage-top,
+.qlassy-ads-homepage-bottom,
+.qlassy-ads-category-top,
+.qlassy-ads-category-bottom,
+.qlassy-ads-tag-top,
+.qlassy-ads-tag-bottom,
+.qlassy-ads-user-profile,
+.qlassy-ads-search-results {
+	margin: 15px 0;
+	padding: 10px;
+	text-align: center;
+	border-radius: 4px;
+	background: #ffffff;
+	border: 1px solid #e9ecef;
+	position: relative;
+	z-index: 1;
+}
+
+/* Lazy loading placeholder styles */
+.qlassy-lazy-ad {
+	display: block;
+	min-height: 250px;
+	background: #f8f9fa;
+	border: 1px dashed #dee2e6;
+	border-radius: 4px;
+	margin: 15px 0;
+	text-align: center;
+	line-height: 250px;
+	color: #6c757d;
+	font-size: 14px;
+	position: relative;
+}
+
+.qlassy-lazy-ad::before {
+	content: "Loading advertisement...";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #6c757d;
+	font-size: 14px;
+	z-index: 1;
+}
+
+/* Hide placeholder text when ad content is loaded */
+.qlassy-lazy-ad:not(:empty)::before {
+	display: none;
+}
+
+/* Ensure ad content is properly displayed */
+.qlassy-lazy-ad img,
+.qlassy-lazy-ad iframe,
+.qlassy-lazy-ad ins {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Ad space reservation for LCP optimization */
+.qlassy-ads-question-top,
+.qlassy-ads-question-bottom,
+.qlassy-ads-homepage-top,
+.qlassy-ads-homepage-bottom {
+	display: block;
+	min-height: 250px; /* Reserve space for standard ad slots */
+}
+
+.qlassy-ads-header,
+.qlassy-ads-footer {
+	display: block;
+	min-height: 90px; /* Reserve space for header/footer ads */
+}
+
+.qlassy-ads-sidebar-top,
+.qlassy-ads-sidebar-bottom {
+	display: block;
+	min-height: 250px; /* Reserve space for sidebar ads */
+}
+
+.qlassy-ads-between-answers,
+.qlassy-ads-between-questions {
+	display: block;
+	min-height: 250px; /* Reserve space for between content ads */
+}
+
+/* Sidebar ads specific styling */
+.qlassy-ads-sidebar-top,
+.qlassy-ads-sidebar-bottom {
+	margin: 10px 0;
+	padding: 8px;
+}
+
+/* Sticky side rail ads styling - only when needed */
+.qlassy-ads-left-rail,
+.qlassy-ads-right-rail {
+	position: fixed !important;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 9999;
+	max-width: 160px;
+}
+
+.qlassy-ads-left-rail {
+	left: 10px;
+}
+
+.qlassy-ads-right-rail {
+	right: 10px;
+}
+
+/* Hide side rail ads on mobile devices */
+@media (max-width: 768px) {
+	.qlassy-ads-left-rail,
+	.qlassy-ads-right-rail {
+		display: none;
+	}
+	
+	/* Adjust close button size on mobile */
+	.qlassy-ads-close-btn {
+		width: 28px;
+		height: 28px;
+		font-size: 18px;
+		top: 8px;
+		right: 8px;
+	}
+}
+
+/* Sticky top and bottom ads styling - only when needed */
+.qlassy-ads-top-sticky {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+}
+
+.qlassy-ads-bottom-sticky {
+    position: fixed !important;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    padding: 10px;
+    text-align: center;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+/* Close button styling for sticky ads */
+.qlassy-ads-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 16px;
+    height: 16px;
+    background: #000000;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    line-height: 23px;
+}
+
+.qlassy-ads-close-btn:hover {
+	background: #c82333;
+}
+
+.qlassy-ads-close-btn:focus {
+	outline: none;
+	box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.5);
+}
+
+/* Header and footer ads - transparent background */
+.qlassy-ads-header, 
+.qlassy-ads-footer {
+    background: transparent;
+    border: 0px;
+    padding: 0px;
+}
+
+/* Between answers ads special styling */
+.qlassy-ads-between-answers {
+	margin: 20px 0;
+	padding: 15px;
+	background: #ffffff;
+	border: 1px solid #dee2e6;
+	border-radius: 4px;
+	position: relative;
+}
+
+.qlassy-ads-between-answers[data-show-label="true"]::before {
+	content: "Advertisement";
+	position: absolute;
+	top: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #6c757d;
+	color: white;
+	padding: 2px 8px;
+	border-radius: 3px;
+	font-size: 11px;
+	font-weight: bold;
+	z-index: 10;
+}
+
+/* Between questions ads special styling */
+.qlassy-ads-between-questions {
+    margin: 10px 0;
+    padding: 15px;
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    position: relative;
+}
+
+.qlassy-ads-between-questions[data-show-label="true"]::before {
+    content: "Advertisement";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #787878;
+    padding: 2px 8px;
+    font-size: 11px;
+    z-index: 10;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.qlassy-ads-header,
+	.qlassy-ads-footer,
+	.qlassy-ads-main-top,
+	.qlassy-ads-question-top,
+	.qlassy-ads-question-bottom,
+	.qlassy-ads-answer-top,
+	.qlassy-ads-answer-bottom,
+	.qlassy-ads-between-answers,
+	.qlassy-ads-between-questions,
+	.qlassy-ads-homepage-top,
+	.qlassy-ads-homepage-bottom,
+	.qlassy-ads-category-top,
+	.qlassy-ads-category-bottom,
+	.qlassy-ads-tag-top,
+	.qlassy-ads-tag-bottom,
+	.qlassy-ads-user-profile,
+	.qlassy-ads-search-results,
+	.qlassy-ads-top-sticky,
+	.qlassy-ads-bottom-sticky {
+		margin: 10px 0;
+		padding: 8px;
+	}
+	
+	.qlassy-ads-between-answers,
+	.qlassy-ads-between-questions {
+		margin: 15px 0;
+		padding: 12px;
+	}
+}
+
+/* Print styles - hide ads when printing */
+@media print {
+	.qlassy-ads-header,
+	.qlassy-ads-footer,
+	.qlassy-ads-sidebar-top,
+	.qlassy-ads-sidebar-bottom,
+	.qlassy-ads-main-top,
+	.qlassy-ads-question-top,
+	.qlassy-ads-question-bottom,
+	.qlassy-ads-answer-top,
+	.qlassy-ads-answer-bottom,
+	.qlassy-ads-between-answers,
+	.qlassy-ads-between-questions,
+	.qlassy-ads-left-rail,
+	.qlassy-ads-right-rail,
+	.qlassy-ads-homepage-top,
+	.qlassy-ads-homepage-bottom,
+	.qlassy-ads-category-top,
+	.qlassy-ads-category-bottom,
+	.qlassy-ads-tag-top,
+	.qlassy-ads-tag-bottom,
+	.qlassy-ads-user-profile,
+	.qlassy-ads-search-results,
+	.qlassy-ads-top-sticky,
+	.qlassy-ads-bottom-sticky {
+		display: none !important;
+	}
+}
+
+/* Loading animation for ads */
+.qlassy-ads-loading {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 3px solid #f3f3f3;
+	border-top: 3px solid #3498db;
+	border-radius: 50%;
+	animation: qlassy-ads-spin 1s linear infinite;
+}
+
+@keyframes qlassy-ads-spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+/* AdSense responsive ads */
+.qlassy-ads-header ins,
+.qlassy-ads-footer ins,
+.qlassy-ads-sidebar-top ins,
+.qlassy-ads-sidebar-bottom ins,
+.qlassy-ads-main-top ins,
+.qlassy-ads-question-top ins,
+.qlassy-ads-question-bottom ins,
+.qlassy-ads-answer-top ins,
+.qlassy-ads-answer-bottom ins,
+.qlassy-ads-between-answers ins,
+.qlassy-ads-between-questions ins,
+.qlassy-ads-left-rail ins,
+.qlassy-ads-right-rail ins,
+.qlassy-ads-homepage-top ins,
+.qlassy-ads-homepage-bottom ins,
+.qlassy-ads-category-top ins,
+.qlassy-ads-category-bottom ins,
+.qlassy-ads-tag-top ins,
+.qlassy-ads-tag-bottom ins,
+.qlassy-ads-user-profile ins,
+.qlassy-ads-search-results ins,
+.qlassy-ads-top-sticky ins,
+.qlassy-ads-bottom-sticky ins {
+	max-width: 100% !important;
+	height: auto !important;
+}
+
+
+
+/* Adblock Detection Popup Styles */
+#qlassy-adblock-overlay {
+	position: fixed !important;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#qlassy-adblock-popup {
+	background: white;
+	padding: 30px;
+	border-radius: 10px;
+	max-width: 500px;
+	text-align: center;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	animation: qlassy-popup-fade-in 0.3s ease-out;
+}
+
+@keyframes qlassy-popup-fade-in {
+	from {
+		opacity: 0;
+		transform: scale(0.9) translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+#qlassy-adblock-popup h2 {
+	color: #e74c3c;
+	margin: 0 0 15px 0;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+#qlassy-adblock-popup p {
+	color: #555;
+	line-height: 1.6;
+	margin: 0 0 20px 0;
+}
+
+#qlassy-adblock-popup .instructions {
+	background: #f8f9fa;
+	padding: 15px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+#qlassy-adblock-popup .instructions h4 {
+	margin: 0 0 10px 0;
+	color: #333;
+	font-size: 16px;
+}
+
+#qlassy-adblock-popup .instructions ul {
+	margin: 0;
+	padding-left: 20px;
+	color: #666;
+}
+
+#qlassy-adblock-popup .instructions li {
+	margin-bottom: 5px;
+}
+
+#qlassy-adblock-popup button {
+	background: #007cba;
+	color: white;
+	border: none;
+	padding: 12px 24px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+	transition: background-color 0.2s ease;
+}
+
+#qlassy-adblock-popup button:hover {
+	background: #005a87;
+}
+
+/* Hide bait element for adblock detection */
+#qlassy-ad-test {
+	height: 1px !important;
+	width: 1px !important;
+	position: absolute !important;
+	left: -9999px !important;
+}
+
+/* Mobile responsive styles for popup */
+@media (max-width: 768px) {
+	#qlassy-adblock-popup {
+		margin: 20px;
+		padding: 20px;
+		max-width: none;
+	}
+	
+	#qlassy-adblock-popup h2 {
+		font-size: 20px;
+	}
+	
+	#qlassy-adblock-popup button {
+		width: 100%;
+		padding: 15px;
+	}
+}

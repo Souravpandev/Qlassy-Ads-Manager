@@ -1,0 +1,15 @@
+{
+	"name": "Qlassy Ads Manager",
+	"uri": "https://github.com/Souravpandev/Qlassy-Ads-Manager",
+	"description": "A comprehensive advertising plugin for Question2Answer that allows you to insert AdSense banner ads or custom HTML code in various locations throughout your Q2A website. Features include 16+ ad insertion locations, dynamic ad insertion between questions/answers, sticky ads, ad rotation, device targeting, guest-only targeting, role-based targeting, page exclude/include, AdSense header integration, advertisement labels, adblock detection, and LCP optimization with responsive design.",
+	"version": "1.4",
+	"date": "2025-01-28",
+	"author": "Sourav Pan",
+	"author_uri": "https://github.com/Souravpandev",
+	"license": "GPLv3",
+	"update_uri": "https://raw.githubusercontent.com/Souravpandev/Qlassy-Ads-Manager/main/qa-plugin.php",
+	"min_q2a": "1.8",
+	"min_php": "5.4",
+	"website": "https://wpoptimizelab.com/",
+	"repository": "https://github.com/Souravpandev/Qlassy-Ads-Manager"
+}
